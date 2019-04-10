@@ -1,5 +1,8 @@
-import com.sun.org.glassfish.gmbal.Description
 import org.openqa.selenium.By.xpath
+import ui.Element
+import ui.LeafElement
+import ui.Page
+import ui.injectElement
 
 class YaSearchPage: Page<YaSearchPage>() {
 

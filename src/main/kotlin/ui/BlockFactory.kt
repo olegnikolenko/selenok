@@ -1,7 +1,9 @@
+package ui
+
 import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert.assertThat
 import org.openqa.selenium.*
-import org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable
+import org.openqa.selenium.support.ui.ExpectedConditions.*
 import org.openqa.selenium.support.ui.WebDriverWait
 import java.util.*
 import kotlin.properties.ReadOnlyProperty
@@ -14,7 +16,7 @@ abstract class Element {
     open lateinit var driverWait: WebDriverWait
     open lateinit var contextElems: LinkedList<Element>
 
-    private fun find(): WebElement {
+    fun find(): WebElement {
         val elemIterator = contextElems.iterator()
         var elementToFind = elemIterator.next()
         var foundWebElement: WebElement
@@ -46,11 +48,26 @@ abstract class Element {
         webElement.click()
     }
 
-    fun should(message: String, matcher: Matcher<WebElement>) {
-        assertThat<WebElement>(message, find(), matcher)
+    fun should(message: String, matcher: Matcher<Element>) {
+        assertThat<Element>(message, this,  matcher)
     }
-    fun should(matcher: Matcher<WebElement>) {
-        assertThat(find(), matcher)
+
+    fun should(matcher: Matcher<Element>) {
+        assertThat(this, matcher)
+    }
+
+    fun wait(matcher: Matcher<Element>) {
+        wait(this, matcher)
+    }
+
+    private fun wait (element: Element, matcher: Matcher<Element>) {
+        driverWait.until{
+            matcher.matches(element)
+        }
+    }
+
+    override fun toString(): String {
+        return "$description: $locator"
     }
 }
 

@@ -1,5 +1,7 @@
+import matchers.DisplayedMatcher.displayed
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import ui.injectPage
 
 class YandexSearchTest {
 
@@ -7,7 +9,7 @@ class YandexSearchTest {
 
     @BeforeEach
     fun setUp() {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\onikolenko\\IdeaProjects\\uisimple\\src\\test\\resources\\chromedriver.exe")
+        System.setProperty("webdriver.chrome.driver", "C:\\Users\\onikolenko\\IdeaProjects\\selenok\\src\\test\\resources\\chromedriver.exe")
     }
 
     @Test
@@ -17,7 +19,7 @@ class YandexSearchTest {
             .searchBlock
             .homeTabsBlock
             .videoLink
-            .click()
+            .should(displayed())
 
         println("")
     }
