@@ -25,7 +25,7 @@ class SearchBlock: AbstractElement() {
 
     val homeTabsBlock by injectElement<HomeTabsBlock>(
         description = "Home Tabs Block",
-        locator = xpath(".//div[contains(@class, 'home-tabss')]")
+        locator = xpath(".//div[contains(@class, 'home-tabs')]")
     )
 }
 
