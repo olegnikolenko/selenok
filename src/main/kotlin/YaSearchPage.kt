@@ -1,6 +1,6 @@
 import org.openqa.selenium.By.xpath
+import ui.AbstractElement
 import ui.Element
-import ui.LeafElement
 import ui.Page
 import ui.injectElement
 
@@ -21,16 +21,16 @@ class YaSearchPage: Page<YaSearchPage>() {
     }
 }
 
-class SearchBlock: Element() {
+class SearchBlock: AbstractElement() {
 
     val homeTabsBlock by injectElement<HomeTabsBlock>(
         description = "Home Tabs Block",
-        locator = xpath(".//div[contains(@class, 'home-tabs')]")
+        locator = xpath(".//div[contains(@class, 'home-tabss')]")
     )
 }
 
-class HomeTabsBlock: Element(){
-    val videoLink by injectElement<LeafElement>(
+class HomeTabsBlock: AbstractElement(){
+    val videoLink by injectElement<Element>(
         description = "Video Link",
         locator = xpath(".//a[@data-id='video']")
     )

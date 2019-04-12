@@ -4,12 +4,12 @@ import org.hamcrest.Description
 import org.hamcrest.Factory
 import org.hamcrest.TypeSafeMatcher
 import org.openqa.selenium.TimeoutException
-import ui.Element
+import ui.AbstractElement
 import org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf
 
-class DisplayedMatcher : TypeSafeMatcher<Element>() {
+class DisplayedMatcher : TypeSafeMatcher<AbstractElement>() {
 
-    override fun matchesSafely(element: Element): Boolean {
+    override fun matchesSafely(element: AbstractElement): Boolean {
         return try {
             val webElement = element.find()
             element.driverWait.until(visibilityOf(webElement))
@@ -23,7 +23,7 @@ class DisplayedMatcher : TypeSafeMatcher<Element>() {
         description.appendText("element is displayed on page")
     }
 
-    public override fun describeMismatchSafely(element: Element, mismatchDescription: Description) {
+    public override fun describeMismatchSafely(element: AbstractElement, mismatchDescription: Description) {
         mismatchDescription.appendValue(element).appendText(" is not displayed on page")
     }
 

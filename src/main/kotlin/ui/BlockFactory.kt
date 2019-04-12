@@ -9,12 +9,12 @@ import java.util.*
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
-abstract class Element {
+abstract class AbstractElement {
     open lateinit var description: String
     open lateinit var locator: By
     open lateinit var driver: WebDriver
     open lateinit var driverWait: WebDriverWait
-    open lateinit var contextElems: LinkedList<Element>
+    open lateinit var contextElems: LinkedList<AbstractElement>
 
     fun find(): WebElement {
         val elemIterator = contextElems.iterator()
@@ -48,22 +48,24 @@ abstract class Element {
         webElement.click()
     }
 
-    fun should(message: String, matcher: Matcher<Element>) {
-        assertThat<Element>(message, this,  matcher)
+    fun should(message: String, matcher: Matcher<AbstractElement>): AbstractElement {
+        assertThat<AbstractElement>(message, this,  matcher)
+        return this
     }
 
-    fun should(matcher: Matcher<Element>) {
+    fun should(matcher: Matcher<AbstractElement>): AbstractElement {
         assertThat(this, matcher)
+        return this
     }
 
-    fun wait(matcher: Matcher<Element>) {
+    fun wait(matcher: Matcher<AbstractElement>): AbstractElement {
         wait(this, matcher)
+        return this
     }
 
-    private fun wait (element: Element, matcher: Matcher<Element>) {
-        driverWait.until{
-            matcher.matches(element)
-        }
+    private fun wait(element: AbstractElement, matcher: Matcher<AbstractElement>): AbstractElement {
+        driverWait.until{ matcher.matches(element)}
+        return this
     }
 
     override fun toString(): String {
@@ -71,9 +73,9 @@ abstract class Element {
     }
 }
 
-class LeafElement: Element()
+class Element: AbstractElement()
 
-inline fun <reified T: Element>injectElement(description: String, locator: By): ReadOnlyProperty<Any, T> {
+inline fun <reified T: AbstractElement>injectElement(description: String, locator: By): ReadOnlyProperty<Any, T> {
     return lazy {
         val currentElem = T::class.java.newInstance()
         currentElem.locator = locator
@@ -88,7 +90,7 @@ inline fun <reified T: Element>injectElement(description: String, locator: By): 
                         currentElem.contextElems.offerFirst(currentElem)
 
                     }
-                    is Element -> {
+                    is AbstractElement -> {
                         currentElem.driver = thisRef.driver
                         currentElem.driverWait = thisRef.driverWait
                         currentElem.contextElems = thisRef.contextElems

@@ -19,7 +19,7 @@ class YandexSearchTest {
             .searchBlock
             .homeTabsBlock
             .videoLink
-            .should(displayed())
+            .should(displayed()).click()
 
         println("")
     }
