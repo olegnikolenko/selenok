@@ -1,4 +1,4 @@
-import matchers.DisplayedMatcher.displayed
+import matchers.DisplayedMatcher.Companion.displayed
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import ui.injectPage
