@@ -9,7 +9,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf
 
 class DisplayedMatcher : TypeSafeMatcher<AbstractElement>() {
 
+    lateinit var element: AbstractElement
+
     override fun matchesSafely(element: AbstractElement): Boolean {
+        this.element = element
         return try {
             val webElement = element.find()
             element.driverWait.until(visibilityOf(webElement))
@@ -20,7 +23,7 @@ class DisplayedMatcher : TypeSafeMatcher<AbstractElement>() {
     }
 
     override fun describeTo(description: Description) {
-        description.appendText("element is displayed on page")
+        description.appendValue(element).appendText(" is displayed on page")
     }
 
     public override fun describeMismatchSafely(element: AbstractElement, mismatchDescription: Description) {

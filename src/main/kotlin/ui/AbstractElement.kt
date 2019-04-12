@@ -2,12 +2,13 @@ package ui
 
 import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert.assertThat
-import org.openqa.selenium.*
-import org.openqa.selenium.support.ui.ExpectedConditions.*
+import org.openqa.selenium.By
+import org.openqa.selenium.TimeoutException
+import org.openqa.selenium.WebDriver
+import org.openqa.selenium.WebElement
+import org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable
 import org.openqa.selenium.support.ui.WebDriverWait
 import java.util.*
-import kotlin.properties.ReadOnlyProperty
-import kotlin.reflect.KProperty
 
 abstract class AbstractElement {
     open lateinit var description: String
@@ -74,33 +75,3 @@ abstract class AbstractElement {
 }
 
 class Element: AbstractElement()
-
-inline fun <reified T: AbstractElement>injectElement(description: String, locator: By): ReadOnlyProperty<Any, T> {
-    return lazy {
-        val currentElem = T::class.java.newInstance()
-        currentElem.locator = locator
-        currentElem.description = description
-        object : ReadOnlyProperty<Any, T> {
-            override fun getValue(thisRef: Any, property: KProperty<*>): T {
-                when(thisRef) {
-                    is Page<*> -> {
-                        currentElem.driver = thisRef.webDriver
-                        currentElem.driverWait = thisRef.webDriverWait
-                        currentElem.contextElems = LinkedList()
-                        currentElem.contextElems.offerFirst(currentElem)
-
-                    }
-                    is AbstractElement -> {
-                        currentElem.driver = thisRef.driver
-                        currentElem.driverWait = thisRef.driverWait
-                        currentElem.contextElems = thisRef.contextElems
-                        currentElem.contextElems.add(currentElem)
-                    }
-                }
-                return currentElem
-            }
-        }
-    }.value
-}
-
-
