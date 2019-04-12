@@ -32,10 +32,10 @@ abstract class AbstractElement {
                 }
             }
         } catch (ex: TimeoutException) {
-            println("При поиске элемента $description [$locator] в цепочке вызовов упали на:\n")
+            println("Не нашли элемент $description [$locator]:\n")
             contextElems.forEach {
                 if (it == elementToFind) {
-                    println("[]=> ${it.description} [${it.locator}]")
+                    println("из за []=> ${it.description} [${it.locator}]")
                 } else println(it.description)
             }
             throw ex
