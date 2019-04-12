@@ -8,7 +8,7 @@ import kotlin.reflect.KProperty
 const val driver = "driver"
 const val driverWait = "driverWait"
 
-inline fun <reified T: Page<T>>injectPage(): ReadOnlyProperty<Any, T> {
+inline fun <reified T: Page<T>>page(): ReadOnlyProperty<Any, T> {
     return lazy {
         val instance = T::class.constructors.first {
             it.parameters.isEmpty()

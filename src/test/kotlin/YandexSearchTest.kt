@@ -1,11 +1,11 @@
 import matchers.DisplayedMatcher.Companion.displayed
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import ui.injectPage
+import ui.page
 
 class YandexSearchTest {
 
-    private val yaSearchPage by injectPage<YaSearchPage>()
+    private val yaSearchPage by page<YaSearchPage>()
 
     @BeforeEach
     fun setUp() {
