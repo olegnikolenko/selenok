@@ -14,10 +14,7 @@ class ElementBuilder {
 
     var locator: By by Delegates.notNull()
 
-    inline fun <reified T: AbstractElement>build(): ReadOnlyProperty<Any, T> = injectElement(description, locator)
-
-    inline fun <reified T: AbstractElement>injectElement(description: String, locator: By): ReadOnlyProperty<Any, T> {
-        return lazy {
+    inline fun <reified T: AbstractElement>build(): ReadOnlyProperty<Any, T> = lazy {
             val currentElem = T::class.java.newInstance()
             currentElem.locator = locator
             currentElem.description = description
@@ -42,8 +39,6 @@ class ElementBuilder {
                 }
             }
         }.value
-    }
-
 }
 
 
