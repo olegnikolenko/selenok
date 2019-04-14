@@ -15,11 +15,12 @@ class YandexSearchTest {
     @Test
     fun testSearchPage() {
 
-        yaSearchPage.open()
-            .searchBlock
+        yaSearchPage {
+            searchBlock
             .homeTabsBlock
             .videoLink
             .should(displayed()).click()
+        }
 
         println("")
     }

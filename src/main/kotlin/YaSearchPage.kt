@@ -1,7 +1,5 @@
 import org.openqa.selenium.By.xpath
 import ui.*
-import kotlin.properties.ReadOnlyProperty
-import kotlin.reflect.KProperty
 
 class YaSearchPage: Page<YaSearchPage>() {
 
@@ -17,6 +15,11 @@ class YaSearchPage: Page<YaSearchPage>() {
     override fun open(): YaSearchPage {
         webDriver.get("https://yandex.ru")
         return getPage()
+    }
+
+    operator fun invoke(block: YaSearchPage.() -> Unit) {
+        open()
+        block()
     }
 }
 
