@@ -6,6 +6,7 @@ import ui.page
 class YandexSearchTest {
 
     private val yaSearchPage by page<YaSearchPage>()
+    private val yaResultPage by page<YaResultPage>()
 
     @BeforeEach
     fun setUp() {
@@ -16,12 +17,14 @@ class YandexSearchTest {
     fun testSearchPage() {
 
         yaSearchPage {
-            searchBlock
-            .homeTabsBlock
-            .videoLink
-            .should(displayed()).click()
+            open()
+            searchBlock {
+                findText("find some text")
+            }
         }
-
+        yaResultPage {
+            searchBlock.homeTabsBlock.videoLink.should(displayed())
+        }
         println("")
     }
 }

@@ -2,6 +2,7 @@ package ui
 
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.support.ui.WebDriverWait
+import kotlin.concurrent.getOrSet
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
@@ -25,11 +26,11 @@ class PageContext {
     val map: HashMap<String, Any> = hashMapOf()
 
     init{
-        map[driver] = ThreadLocal.withInitial<WebDriver> {
+        map[driver] = ThreadLocal<WebDriver>().getOrSet {
             DriverType.valueOf("CHROME").createDiver()
         }
         map[driverWait] = WebDriverWait(
-            (map[driver] as ThreadLocal<*>).get() as WebDriver, 10
+            map[driver] as WebDriver, 10
         )
     }
 

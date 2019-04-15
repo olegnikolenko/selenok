@@ -17,6 +17,11 @@ abstract class AbstractElement {
     open lateinit var driverWait: WebDriverWait
     open lateinit var contextElems: LinkedList<AbstractElement>
 
+    fun sendKeys(str: String) {
+        find().sendKeys(str)
+    }
+
+
     fun find(): WebElement {
         val elemIterator = contextElems.iterator()
         var elementToFind = elemIterator.next()

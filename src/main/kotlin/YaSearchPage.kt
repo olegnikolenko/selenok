@@ -17,8 +17,7 @@ class YaSearchPage: Page<YaSearchPage>() {
         return getPage()
     }
 
-    operator fun invoke(block: YaSearchPage.() -> Unit) {
-        open()
+    override operator fun invoke(block: YaSearchPage.() -> Unit) {
         block()
     }
 }
@@ -28,6 +27,26 @@ class SearchBlock: AbstractElement() {
         description = "Home Tabs Block"
         locator = xpath(".//div[contains(@class, 'home-tabs')]")
     }
+
+    val input by element<Element> {
+        description = "Input field"
+        locator = xpath("//input[contains(@class, 'input__control')]")
+    }
+
+    val findButton by element<Element> {
+        description = "Find"
+        locator = xpath("//button")
+    }
+
+    fun findText(textToFind: String){
+        input.sendKeys(textToFind)
+        findButton.click()
+    }
+
+    operator fun invoke(block: SearchBlock.() -> Unit) {
+        block()
+    }
+
 }
 
 class HomeTabsBlock: AbstractElement(){
