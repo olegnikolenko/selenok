@@ -23,7 +23,7 @@ class YandexSearchTest {
             }
         }
         yaResultPage {
-            searchBlock.homeTabsBlock.videoLink.should(displayed())
+            navigationBlock.videoLink.should(displayed())
         }
         println("")
     }

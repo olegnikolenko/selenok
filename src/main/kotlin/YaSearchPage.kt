@@ -22,6 +22,13 @@ class YaSearchPage: Page<YaSearchPage>() {
     }
 }
 
+class NavigationBlock: AbstractElement() {
+    val videoLink by element<Element> {
+        description = "Video Link"
+        locator = xpath(".//a[contains(@data-bem, 'video')]")
+    }
+}
+
 class SearchBlock: AbstractElement() {
     val homeTabsBlock by element<HomeTabsBlock>{
         description = "Home Tabs Block"

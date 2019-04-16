@@ -4,11 +4,10 @@ import ui.element
 
 class YaResultPage: Page<YaResultPage>() {
 
-    val searchBlock by element<SearchBlock> {
+    val navigationBlock by element<NavigationBlock> {
         description = "Search Block"
-        locator = By.xpath(".//div[contains(@class, 'container__search')]")
+        locator = By.xpath(".//div[@class = 'navigation__region']")
     }
-
 
     override fun invoke(block: YaResultPage.() -> Unit) {
         block()

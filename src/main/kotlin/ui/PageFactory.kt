@@ -26,12 +26,8 @@ class PageContext {
     val map: HashMap<String, Any> = hashMapOf()
 
     init{
-        map[driver] = ThreadLocal<WebDriver>().getOrSet {
-            DriverType.valueOf("CHROME").createDiver()
-        }
-        map[driverWait] = WebDriverWait(
-            map[driver] as WebDriver, 10
-        )
+        map[driver] = webDriver
+        map[driverWait] = webDriverWait
     }
 
 }
