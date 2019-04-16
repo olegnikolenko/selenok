@@ -5,12 +5,16 @@ import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.support.ui.WebDriverWait
 import kotlin.concurrent.getOrSet
 
-val webDriver = ThreadLocal<WebDriver>().getOrSet {
-    DriverType.valueOf("CHROME").createDiver()
+val webDriver by lazy {
+    ThreadLocal<WebDriver>().getOrSet {
+        DriverType.valueOf("CHROME").createDiver()
+    }
 }
 
-val webDriverWait = ThreadLocal<WebDriverWait>().getOrSet {
-    WebDriverWait(webDriver, 10)
+val webDriverWait by lazy {
+    ThreadLocal<WebDriverWait>().getOrSet {
+        WebDriverWait(webDriver, 10)
+    }
 }
 
 enum class DriverType: DriverFactory {
