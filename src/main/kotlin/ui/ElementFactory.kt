@@ -22,15 +22,11 @@ class ElementBuilder {
                 override fun getValue(thisRef: Any, property: KProperty<*>): T {
                     when(thisRef) {
                         is Page<*> -> {
-                            currentElem.driver = thisRef.webDriver
-                            currentElem.driverWait = thisRef.webDriverWait
                             currentElem.contextElems = LinkedList()
                             currentElem.contextElems.offerFirst(currentElem)
 
                         }
                         is AbstractElement -> {
-                            currentElem.driver = thisRef.driver
-                            currentElem.driverWait = thisRef.driverWait
                             currentElem.contextElems = thisRef.contextElems
                             currentElem.contextElems.add(currentElem)
                         }

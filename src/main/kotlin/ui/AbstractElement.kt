@@ -4,17 +4,13 @@ import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert.assertThat
 import org.openqa.selenium.By
 import org.openqa.selenium.TimeoutException
-import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable
-import org.openqa.selenium.support.ui.WebDriverWait
 import java.util.*
 
 abstract class AbstractElement {
     open lateinit var description: String
     open lateinit var locator: By
-    open lateinit var driver: WebDriver
-    open lateinit var driverWait: WebDriverWait
     open lateinit var contextElems: LinkedList<AbstractElement>
 
     fun sendKeys(str: String) {
@@ -27,12 +23,12 @@ abstract class AbstractElement {
         var elementToFind = elemIterator.next()
         var foundWebElement: WebElement
         try {
-            foundWebElement = driverWait.until{
+            foundWebElement = webDriverWait.until{
                 it.findElement(elementToFind.locator)
             }
             while (elemIterator.hasNext()) {
                 elementToFind = elemIterator.next()
-                driverWait.until {
+                webDriverWait.until {
                     foundWebElement = foundWebElement.findElement(elementToFind.locator)
                 }
             }
@@ -50,7 +46,7 @@ abstract class AbstractElement {
 
     fun click() {
         val webElement = find()
-        driverWait.until(elementToBeClickable(webElement))
+        webDriverWait.until(elementToBeClickable(webElement))
         webElement.click()
     }
 
@@ -70,7 +66,7 @@ abstract class AbstractElement {
     }
 
     private fun wait(element: AbstractElement, matcher: Matcher<AbstractElement>): AbstractElement {
-        driverWait.until{ matcher.matches(element)}
+        webDriverWait.until{ matcher.matches(element)}
         return this
     }
 

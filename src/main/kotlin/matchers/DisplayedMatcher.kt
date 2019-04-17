@@ -6,6 +6,7 @@ import org.hamcrest.TypeSafeMatcher
 import org.openqa.selenium.TimeoutException
 import ui.AbstractElement
 import org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf
+import ui.webDriverWait
 
 class DisplayedMatcher : TypeSafeMatcher<AbstractElement>() {
 
@@ -15,7 +16,7 @@ class DisplayedMatcher : TypeSafeMatcher<AbstractElement>() {
         this.element = element
         return try {
             val webElement = element.find()
-            element.driverWait.until(visibilityOf(webElement))
+            webDriverWait.until(visibilityOf(webElement))
             webElement.isDisplayed
         } catch (e: TimeoutException) {
             false
